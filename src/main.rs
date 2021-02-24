@@ -57,18 +57,13 @@ impl Board {
 
     /// place the ship onto the board
     fn place_ship(& mut self, ship: Ship){
-        //let letters = "ABCDEFGHIJDLMNOPQRSTUVWXYZ";
-        //where does the ship start
+        //pub ship on board
         let (letter, col) = ship.start;
-        //convert letter into row number
-        //let row = letters.find(&letter).unwrap() as usize;
+
         use rusty_battleship::alpha_to_digit;
         let row = alpha_to_digit(&letter);
 
-        //start ship here
-        //self.board[row][col] = "ss|".to_string();
 
-        //get length and direction of ship. Place rest of ship
         match ship.direction{
             Direction::NorthSouth => {
                 for i in row .. row+ship.length{
