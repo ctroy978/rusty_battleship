@@ -1,11 +1,13 @@
 use super::ships;
 
+
 pub struct Board {
     ///The board is a two dimensional vector filled with "~~"
     pub board: Vec<Vec<String>>,
     row: usize,
     col: usize,
 }
+
 impl Board {
     ///returns the board filled with empty water
     ///
