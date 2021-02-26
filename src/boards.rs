@@ -3,6 +3,8 @@ use super::ships;
 pub struct Board {
     ///The board is a two dimensional vector filled with "~~"
     pub board: Vec<Vec<String>>,
+    row: usize,
+    col: usize,
 }
 impl Board {
     ///returns the board filled with empty water
@@ -15,6 +17,8 @@ impl Board {
         Self {
             //board: [["~"; 20]; 20],
             board: vec![vec![String::from("~~|"); col]; row],
+            row,
+            col,
         }
     }
 
@@ -45,9 +49,10 @@ impl Board {
         }
     }
     /// place the ship onto the board
-    pub fn place_ship(& mut self, ship: ships::Ship){
-        //pub ship on board
-        let (letter, col) = ship.start;
+    pub fn place_ship(& mut self, ship: &ships::Ship){
+        //put ship on board
+        let (letter, _) = &ship.start;
+        let (_, col) = ship.start;
 
         use rusty_battleship::alpha_to_digit;
         let row = alpha_to_digit(&letter);
@@ -68,32 +73,40 @@ impl Board {
         }
     }
 
-    pub fn ship_fits(&self, start: (String,usize), length: usize, direction: ships::Direction)-> bool{
-        //empty space on board
-        let empty_water = String::from("~~|"); 
-        let mut fits = true;
-        
-        let (letter, col) = start;
+    ///check if ship can fit on board
+    pub fn fit_check(&self, ship: &ships::Ship)-> bool{
+        let water = String::from("~~|");
+        let (letter, _) = &ship.start;
+        let (_, col) = ship.start;
 
-        use rusty_battleship::alpha_to_digit;
-        let row = alpha_to_digit(&letter);
 
-        match direction{
-            ships::Direction::NorthSouth => {
-                for i in row .. row+length{
-                    if self.board[i][col] != empty_water{
-                        fits = false;
+        //use rusty_battleship::alpha_to_digit;
+        let row = rusty_battleship::alpha_to_digit(&letter);
+
+        match ship.direction{
+            ships::Direction::NorthSouth =>{
+                if row + ship.length > self.row{
+                    return false;
+                }
+                for i in row..row + ship.length{
+                    if self.board[i][col] != water{
+                        return false;
                     } 
                 }
             }
-            ships::Direction::WestEast=> {
-                for i in col..col_ship.length{
-                    if let check = self.board[row][i]{
 
-                    }
+            ships::Direction::WestEast =>{
+                if col + ship.length > self.col{
+                    return false;
+                }
+                for i in col..col + ship.length{
+                    if self.board[row][i] != water{
+                        return false;
+                    } 
                 }
             }
         }
-        fits 
+        //ship fits in ocean
+        true
     }
 }
