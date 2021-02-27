@@ -15,7 +15,7 @@ fn main() {
 
         ocean.draw();
         let row = ocean.valid_row(); 
-        let col = 4;
+        let col = ocean.valid_col();
         let length = 5;
         let direction = ships::Direction::WestEast;
 

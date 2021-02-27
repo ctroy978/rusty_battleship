@@ -123,7 +123,7 @@ impl Board {
             let mut row = String::new();
             io::stdin()
                 .read_line(&mut row)
-                .expect("Issue with input");
+                .expect("Issue with input for row.");
 
             let row: String = row.trim().to_uppercase();
             let index = letter.find(&row);
@@ -141,5 +141,29 @@ impl Board {
         }
 
     }
+
+    ///Accepts and validates user input for col
+    pub fn valid_col(&self) -> usize{
+        loop{
+            println!("Enter col to place ship -- choose a valid number.");
+
+            let mut col = String::new();
+            io::stdin()
+                .read_line(&mut col)
+                .expect("Issue with reading input for col.");
+
+            let index  = col.trim().parse();
+            match index{
+                Ok(n) => {
+                    if n > 0 && n < self.col{
+                        return n;
+                    }else{
+                        println!("Not a valid range for col.");
+                    }
+                }, 
+                Err(_) => println!("Choose a valid col."), 
+            } 
+        }
+    } 
 
 }
