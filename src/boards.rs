@@ -1,3 +1,5 @@
+use std::io;
+
 use super::ships;
 
 
@@ -81,8 +83,6 @@ impl Board {
         let (letter, _) = &ship.start;
         let (_, col) = ship.start;
 
-
-        //use rusty_battleship::alpha_to_digit;
         let row = rusty_battleship::alpha_to_digit(&letter);
 
         match ship.direction{
@@ -111,4 +111,35 @@ impl Board {
         //ship fits in ocean
         true
     }
+
+    ///Accepts and validates user input for row. 
+    pub fn valid_row(&self) -> String{
+        
+        let letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".to_string();
+
+        loop{
+            println!("Enter row to place ship -- choose a letter.");
+
+            let mut row = String::new();
+            io::stdin()
+                .read_line(&mut row)
+                .expect("Issue with input");
+
+            let row: String = row.trim().to_uppercase();
+            let index = letter.find(&row);
+            match index{
+                Some(i) => {
+                    if i > 0 && i < self.row{
+                        return row;
+                    }else{
+                        println!("Not a valid range for row.")
+                    }
+                }, 
+                None => println!("Choose valid row.")
+            }
+
+        }
+
+    }
+
 }

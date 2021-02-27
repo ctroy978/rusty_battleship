@@ -24,10 +24,8 @@ pub fn build_ship(ocean: &mut boards::Board, start: (String, usize),
         let ship = Ship::new((start.0, start.1), length, direction); 
 
         if ocean.fit_check(&ship){
-            println!("ship can be placed in ocean");
             return Some(ship);
         }else{
-            println!("ship not placed");
             return None;
         }
 
