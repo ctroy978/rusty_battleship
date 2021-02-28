@@ -12,6 +12,8 @@ fn main() {
     
     while total_ships > 0{
 
+        rusty_battleship::clear_screen();
+
         ocean.draw();
         let fleet = 1;
         let length = ships::Ship::valid_len(&mut fleets);

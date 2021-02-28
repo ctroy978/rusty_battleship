@@ -19,7 +19,6 @@ impl Board {
     /// col -the number of col you want (numbered)
     pub fn new(row: usize, col: usize) -> Self {
         Self {
-            //board: [["~"; 20]; 20],
             board: vec![vec![String::from("~~|"); col]; row],
             row,
             col,
@@ -68,6 +67,7 @@ impl Board {
                     self.board[i][col] = "ss|".to_string();
                 }
             }
+        
 
             ships::Direction::WestEast =>{
                 for i in col..col+ship.length{
