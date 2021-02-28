@@ -129,7 +129,7 @@ impl Board {
             let index = letter.find(&row);
             match index{
                 Some(i) => {
-                    if i > 0 && i < self.row{
+                    if i < self.row{
                         return row;
                     }else{
                         println!("Not a valid range for row.")
@@ -155,7 +155,7 @@ impl Board {
             let index  = col.trim().parse();
             match index{
                 Ok(n) => {
-                    if n > 0 && n < self.col{
+                    if n < self.col{
                         return n;
                     }else{
                         println!("Not a valid range for col.");
